@@ -1,7 +1,11 @@
-import { UserAuthProps } from "../types"
-import { auth } from "@/lib/firebase-config";
+import { signInUserProps, UserAuthProps } from "../types"
+import { auth, database } from "@/lib/firebase-config";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { setUserSession } from "../helpers";
+import { v4 as uuidv4 } from "uuid"
+import { doc, setDoc } from "firebase/firestore"; 
+import { COLLECTION_NAMES } from "@/lib/utils";
+
 
 
 
@@ -11,17 +15,20 @@ export const createFirebaseUserAccount = async ({
     try {
         setLoading("loading")
         const userCredentials = await createUserWithEmailAndPassword(auth, values.email, values.password)
+        await addUserInfoToFirestore(values.FullName, values.email)
         console.log(userCredentials)
         setLoading("done")
     } catch (error) {
         console.error(error)
         setLoading("error")
+        return
     }
 }
 
+
 export const signInUser = async ({
     values, setLoading
-}: UserAuthProps) => {
+}: signInUserProps) => {
     try {
         console.log(values)
         setLoading("loading")
@@ -35,6 +42,14 @@ export const signInUser = async ({
 
 }
 
-export const addUserInfoToFirestore = () => {
-
+export const addUserInfoToFirestore = async (fullName: string, email: string) => {
+    try {
+        await setDoc(doc(database, COLLECTION_NAMES.users, `${uuidv4()}`), {
+            fullName,
+            email,
+          });
+    } catch (error) {
+        console.error(error)
+        return
+    }
 }

@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { formSchema } from "../../utils"
+import { signInFormSchema } from "../../utils"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,21 +16,22 @@ import { useState } from "react"
 import { signInUser } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
+import Logo from "@/components/Logo"
 
 
 
 export default function Signin() {
   const router = useRouter()
   const [loading, setLoading] = useState("")
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signInFormSchema>>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues: {
         email: "",
         password: "",
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof signInFormSchema>) {
     console.log(values)
     try {
       await signInUser({values, setLoading})
@@ -45,8 +46,8 @@ export default function Signin() {
     <section className="w-[30%] mx-auto mt-20 border border-gray-200 p-10
     rounded">
      <div className="flex flex-col items-center justify-center mb-2">
-      <h1 className="font-bold text-2xl mb-1">Cookio</h1>
-      <div>Welcome back!</div>
+      <Logo />
+      <div className="mt-5 mb-5">Welcome back!</div>
      </div>
      <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

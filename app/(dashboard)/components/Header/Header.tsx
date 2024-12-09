@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import { Plus } from "lucide-react"
+import Logo from "@/components/Logo";
 
 
 export default function Header() {
@@ -11,16 +11,7 @@ export default function Header() {
   return (
     <section className="flex justify-between mt-7">
       <section className="flex items-center gap-8">
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            alt="logo"
-            src="/images/logo.png"
-            width={48}
-            height={48}
-            className="w-[48px] h-[48px]"
-          />
-          <span className="text-2xl font-medium text-black-color">Cookio</span>
-        </Link>
+        <Logo />
         <ul className="flex items-center gap-5">
           <li className={li_styles}>Recipes</li>
           <li className={li_styles}>Categories</li>

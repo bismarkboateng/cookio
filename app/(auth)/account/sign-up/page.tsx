@@ -16,6 +16,7 @@ import { useState } from "react"
 import { createFirebaseUserAccount } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
+import Logo from "@/components/Logo"
 
 
 
@@ -25,6 +26,7 @@ export default function Signup() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+        FullName: "",
         email: "",
         password: "",
     },
@@ -44,11 +46,29 @@ export default function Signup() {
     <section className="w-[30%] mx-auto mt-20 border border-gray-200 p-10
     rounded">
      <div className="flex flex-col items-center justify-center mb-2">
-      <h1 className="font-bold text-2xl mb-1">Cookio</h1>
-      <div>Create an account with us!</div>
+      <Logo />
+      <div className="mt-5 mb-5">Create an account with us!</div>
      </div>
      <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <FormField
+          control={form.control}
+          name="FullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="">Full Name</FormLabel>
+              <FormControl className="focus:outline-offset-0">
+                <Input
+                 type="text"
+                 className="focus:outline-offset-0 focus:outline-ring-0"
+                 required
+                 placeholder="Evans Ohio" {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
