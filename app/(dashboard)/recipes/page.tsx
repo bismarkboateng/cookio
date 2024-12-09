@@ -1,8 +1,10 @@
 
-export default function page() {
+export default function Recipe() {
   return (
     <section>
-     Recipes dashboard
+      <div className="mt-10">
+       show all recipes
+      </div>
     </section>
   )
 }

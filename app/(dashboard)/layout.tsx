@@ -19,13 +19,11 @@ export default function DashboarLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${roboto.className}`}
-      >
-        <Header />
-        {children}
-      </body>
-    </html>
+    <main
+      className={`${roboto.className} w-[85%] mx-auto`}
+    >
+      <Header />
+      {children}
+    </main>
   );
 }

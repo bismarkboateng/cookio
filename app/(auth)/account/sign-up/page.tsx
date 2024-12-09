@@ -15,7 +15,7 @@ import { useState } from "react"
 
 import { createFirebaseUserAccount } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 
 
@@ -30,11 +30,14 @@ export default function Signup() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setLoading("")
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    createFirebaseUserAccount({values, setLoading})
-    router.push("/account/sign-in")
+    try {
+      await createFirebaseUserAccount({values, setLoading})
+      router.push("/account/sign-in")
+    } catch (error) {
+      console.error(error)
+    }
   }
   
   return (
@@ -86,7 +89,7 @@ export default function Signup() {
         active:bg-orange-500 font-bold flex items-center justify-center">
           {loading === "loading" ? (
             <Loader2Icon className="w-4 h-4 animate-spin" />
-          ): "Submit"}
+          ): "Sign up"}
         </Button>
         <div className="flex items-center justify-center">
           {loading === "error" && (

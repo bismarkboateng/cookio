@@ -18,12 +18,10 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${roboto.className}`}
-      >
-        {children}
-      </body>
-    </html>
+    <main
+      className={`${roboto.className}`}
+    >
+      {children}
+    </main>
   );
 }

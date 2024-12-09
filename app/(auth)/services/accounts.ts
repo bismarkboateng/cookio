@@ -1,6 +1,7 @@
 import { UserAuthProps } from "../types"
 import { auth } from "@/lib/firebase-config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { setUserSession } from "../helpers";
 
 
 
@@ -11,7 +12,6 @@ export const createFirebaseUserAccount = async ({
         setLoading("loading")
         const userCredentials = await createUserWithEmailAndPassword(auth, values.email, values.password)
         console.log(userCredentials)
-        console.log(userCredentials.user)
         setLoading("done")
     } catch (error) {
         console.error(error)
@@ -23,8 +23,10 @@ export const signInUser = async ({
     values, setLoading
 }: UserAuthProps) => {
     try {
+        console.log(values)
         setLoading("loading")
-        // sign into user
+        const user = await signInWithEmailAndPassword(auth, values.email, values.password)
+        setUserSession(user.user.email!)
         setLoading("done")
     } catch (error) {
         console.error(error)

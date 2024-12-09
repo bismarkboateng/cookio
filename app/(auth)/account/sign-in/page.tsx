@@ -30,12 +30,15 @@ export default function Signin() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    setLoading("")
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values)
-    signInUser({values, setLoading})
-    // set to cookie storage
-    router.push("/recipes")
+    try {
+      await signInUser({values, setLoading})
+      router.push("/recipes")
+    } catch (error) {
+      console.log(error)
+      return
+    }
   }
   
   return (
@@ -87,7 +90,7 @@ export default function Signin() {
         active:bg-orange-500 font-bold flex items-center justify-center">
           {loading === "loading" ? (
             <Loader2Icon className="w-4 h-4 animate-spin" />
-          ): "Submit"}
+          ): "Sign in"}
         </Button>
         <div className="flex items-center justify-center">
           {loading === "error" && (
