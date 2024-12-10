@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid"
 import { collection, getDocs } from "firebase/firestore";
 import { Recipe } from "../types";
 import { revalidatePath } from "next/cache";
-import { getUserSession } from "@/app/(auth)/helpers";
 
 
 type Props = {

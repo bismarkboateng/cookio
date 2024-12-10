@@ -29,7 +29,7 @@ export default function FileUploader({
     if (uploadedUrl && uploadedUrl !== image) {
       setImage(uploadedUrl as string)
     }
-  }, [uploadedUrl])
+  }, [uploadedUrl, image])
 
   
 
