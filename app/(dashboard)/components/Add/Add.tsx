@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 import { addRecipeToFireStore, fetchCategories, fetchRecipe, updateRecipe } from "../../services/recipes";
 import { useRouter } from "next/navigation";
 import { Recipe } from "../../types";
+import { uploadRecipeImageToStorage } from "../../utils";
 
 type Props = {
   type: string;
@@ -69,7 +70,7 @@ export default function RecipeForm({ type, id }: Props) {
 
     fetchData()
     fetchCategoriesFromDb()
-  }, [])
+  }, [id, type])
 
   const handleSubmit = async () => {
     switch (type) {
@@ -77,13 +78,14 @@ export default function RecipeForm({ type, id }: Props) {
         // add data to db
         try {
           setLoading("loading")
-          // const uploadedUrl = await uploadRecipeImageToStorage(image!)
+          const uploadedUrl = await uploadRecipeImageToStorage(image as File)
+          console.log(uploadedUrl)
           // TODO: check the file uploading
           const info = await addRecipeToFireStore({
             formValues,
             category,
             instructions,
-            imageUrl: "https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg",
+            imageUrl: uploadedUrl,
             isPublic: false
           })
           console.log(info)
@@ -104,7 +106,7 @@ export default function RecipeForm({ type, id }: Props) {
             formValues,
             category,
             instructions,
-            imageUrl: "https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg",
+            imageUrl: image
           })
           setLoading("done")
           router.push("/recipes")

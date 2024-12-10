@@ -13,7 +13,7 @@ export default async function Recipe() {
       {data.map(item => (
         <RecipeCard
          key={item.category}
-         imageUrl="https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg"
+         imageUrl={item.imageUrl}
          category={item.category}
          tags={item.tags}
          title={item.title}

@@ -33,6 +33,7 @@ export const addRecipeToFireStore = async ({
             isPublic,
         });
         revalidatePath("/recipes")
+        window.location.reload()
     } catch (error) {
         console.error(error)
     }
