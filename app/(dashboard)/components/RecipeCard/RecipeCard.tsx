@@ -30,7 +30,7 @@ export default function RecipeCard({
           <p className="text-white text-sm italic mt-2">{category}</p>
           <div className="flex gap-2 mt-3">
             {tags?.split(",").map((item) => (
-                <span key={item} className="bg-white text-gray-700 py-1 px-3 text-xs rounded-full">
+                <span key={item} className=" text-gray-200 italic text-xs rounded-full">
                  {item.trim()}
                 </span>
             ))}

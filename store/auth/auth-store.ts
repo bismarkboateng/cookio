@@ -4,6 +4,6 @@ import { AuthType } from "./types"
 export const useAuthStore = create<AuthType>((set) => ({
   isAuth: false,
   email: "",
-  toggleAuth: () => set((state) => ({ isAuth: !state.isAuth })),
+  setAuth: () => set(() => ({ isAuth: true })),
   setEmail: (userEmail: string) => set(() => ({ email: userEmail }))
 }))

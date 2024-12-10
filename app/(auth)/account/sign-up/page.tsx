@@ -17,6 +17,8 @@ import { createFirebaseUserAccount } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Logo from "@/components/Logo"
+import Link from "next/link"
+import toast from "react-hot-toast"
 
 
 
@@ -36,11 +38,14 @@ export default function Signup() {
     console.log(values)
     try {
       await createFirebaseUserAccount({values, setLoading})
+      toast.success("account created")
       router.push("/account/sign-in")
     } catch (error) {
       console.error(error)
+      setLoading("")
+      return
     }
-  }
+  } 
   
   return (
     <section className="w-[30%] mx-auto mt-20 border border-gray-200 p-10
@@ -117,6 +122,9 @@ export default function Signup() {
           )}
         </div>
       </form>
+      <div className="text-xs">
+        Already have an account? <Link href="/account/sign-in" className="text-blue-500">Sign in</Link>
+      </div>
     </Form>
     </section>
   )

@@ -12,7 +12,7 @@ import { handleInstructionsChange, handleNextStep, handlePreviousStep } from "..
 
 import FileUploader from "../FileUploader";
 import toast from "react-hot-toast";
-import { addRecipeToFireStore, fetchRecipe, updateRecipe } from "../../services/recipes";
+import { addRecipeToFireStore, fetchCategories, fetchRecipe, updateRecipe } from "../../services/recipes";
 import { useRouter } from "next/navigation";
 import { Recipe } from "../../types";
 
@@ -26,6 +26,7 @@ export default function RecipeForm({ type, id }: Props) {
   const [currentStep, setCurrentStep] = useState(0)
   const [loading, setLoading] = useState("")
   const [category, setCategory] = useState("")
+  const [allCategories, setAllCategories] = useState<string[] | undefined>(undefined)
   const [image, setImage] = useState<null | File | string>(null)
   const [formValues, setFormValues] = useState({
     title: "",
@@ -37,10 +38,10 @@ export default function RecipeForm({ type, id }: Props) {
 
 
   const handleFieldChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value} = event.target
-    setFormValues(prevValues => ({...prevValues, [name]: value}))
+    const { name, value } = event.target
+    setFormValues(prevValues => ({ ...prevValues, [name]: value }))
   }
-  
+
   function returnImageUrl(file: File) {
     setImage(file)
   }
@@ -60,11 +61,18 @@ export default function RecipeForm({ type, id }: Props) {
       }
     }
 
+
+    const fetchCategoriesFromDb = async () => {
+      const categories = await fetchCategories()
+      setAllCategories(categories)
+    }
+
     fetchData()
+    fetchCategoriesFromDb()
   }, [])
 
   const handleSubmit = async () => {
-    switch(type) {
+    switch (type) {
       case "Add":
         // add data to db
         try {
@@ -96,17 +104,18 @@ export default function RecipeForm({ type, id }: Props) {
             formValues,
             category,
             instructions,
-            imageUrl: "https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg"
+            imageUrl: "https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg",
           })
           setLoading("done")
           router.push("/recipes")
         } catch (error) {
           toast.error("failed, try again")
+          console.error(error)
           setLoading("done")
           return
         }
-        // update 
-      default: 
+      // update 
+      default:
         console.error("unknown operation")
     }
   }
@@ -145,8 +154,8 @@ export default function RecipeForm({ type, id }: Props) {
       </div>
 
       <FileUploader
-       returnImageUrl={returnImageUrl}
-       uploadedUrl={image}
+        returnImageUrl={returnImageUrl}
+        uploadedUrl={image}
       />
 
       <div className="mb-6">
@@ -181,20 +190,20 @@ export default function RecipeForm({ type, id }: Props) {
 
           <div className="flex justify-between items-center mt-4">
             <ArrowLeft
-             onClick={() => handlePreviousStep(
-              currentStep, setCurrentStep
-             )}
-             className="text-gray-500 cursor-pointer"
-             size={22}
+              onClick={() => handlePreviousStep(
+                currentStep, setCurrentStep
+              )}
+              className="text-gray-500 cursor-pointer"
+              size={22}
             />
 
             <ArrowRight
-             onClick={() => handleNextStep(
-              currentStep, instructions, setCurrentStep,
-              setInstructions
-             )}
-             className="text-gray-500 cursor-pointer text-sm"
-             size={22}
+              onClick={() => handleNextStep(
+                currentStep, instructions, setCurrentStep,
+                setInstructions
+              )}
+              className="text-gray-500 cursor-pointer text-sm"
+              size={22}
             />
           </div>
 
@@ -203,7 +212,8 @@ export default function RecipeForm({ type, id }: Props) {
       <SelectCategory
         category={category}
         setCategory={setCategory}
-      /> 
+        categories={allCategories}
+      />
 
       <div className="mt-6 text-center">
         <Button
@@ -214,7 +224,7 @@ export default function RecipeForm({ type, id }: Props) {
         >
           {loading === "loading" ? (
             <Loader2Icon className="w-4 h-4 animate-spin" />
-          ): type == "Add" ? "Add" : "Update"}
+          ) : type == "Add" ? "Add" : "Update"}
         </Button>
       </div>
     </div>

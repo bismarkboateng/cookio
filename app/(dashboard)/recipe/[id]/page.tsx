@@ -1,12 +1,11 @@
 "use client"
 
-import { useEffect, useState } from 'react';
-import { fetchRecipe } from '../../services/recipes';
-import { Recipe } from '../../types';
+import { useEffect, useState } from "react"
+import { fetchRecipe } from "../../services/recipes"
+import { Recipe } from "../../types"
 
-import { Loader2Icon } from 'lucide-react';
-import toast from 'react-hot-toast';
-import Image from 'next/image';
+import { Loader2Icon } from "lucide-react"
+import Image from "next/image"
 
 interface ShareRecipeProps {
     params: {
@@ -27,7 +26,7 @@ export default function ShareRecipe({ params }: ShareRecipeProps) {
         if (recipeData && recipeData?.isPublic) {
           setRecipe(recipeData);
         } else {
-          toast.error("recipe not found or it isn't public")
+          console.log("recipe not found")
         }
         setLoading("done");
       };

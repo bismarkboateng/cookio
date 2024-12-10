@@ -1,6 +1,6 @@
 export type AuthType = {
     isAuth: boolean;
     email: string;
-    toggleAuth: () => void;
+    setAuth: () => void;
     setEmail: (email: string) => void;
 }

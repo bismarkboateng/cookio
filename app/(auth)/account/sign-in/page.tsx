@@ -17,8 +17,10 @@ import { signInUser } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Logo from "@/components/Logo"
-import { getUserSession } from "../../helpers"
+
 import { useAuthStore } from "@/store/auth/auth-store"
+import Link from "next/link"
+import toast from "react-hot-toast"
 
 
 
@@ -38,11 +40,12 @@ export default function Signin() {
     console.log(values)
     try {
       await signInUser({values, setLoading})
-      const userEmail = getUserSession()
-      setEmail(userEmail!)
+      setEmail(values.email)
+      toast.success("signed in")
       router.push("/recipes")
     } catch (error) {
       console.log(error)
+      setLoading("")
       return
     }
   }
@@ -104,6 +107,9 @@ export default function Signin() {
           )}
         </div>
       </form>
+      <div className="text-xs">
+        Dont have an account? <Link href="/account/sign-up" className="text-blue-500">Sign up</Link>
+      </div>
     </Form>
     </section>
   )

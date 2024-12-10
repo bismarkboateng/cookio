@@ -94,12 +94,12 @@ type UpdateRecipeProps = {
     },
     category: string;
     instructions: string[],
-    imageUrl: string | File | null
+    imageUrl: string | File | null,
 }
 
 export const updateRecipe = async ({
     id,
-    formValues, category, instructions, imageUrl
+    formValues, category, instructions, imageUrl,
 }: UpdateRecipeProps) => {
     try {
         if (id) {
@@ -115,5 +115,50 @@ export const updateRecipe = async ({
         revalidatePath("/recipes")
     } catch (error) {
         console.error(error)
+    }
+}
+
+export const createCategoryInFireStore = async (category: string) => {
+
+    try {
+        await setDoc(doc(database, COLLECTION_NAMES.categories, `${uuidv4()}`), {
+            category,
+        });
+        revalidatePath("/recipes/add")
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const fetchCategories = async () => {
+    try {
+
+        const categories: string[] = []
+    
+        const querySnapshot = await getDocs(collection(database, COLLECTION_NAMES.categories));
+        querySnapshot.forEach((doc) => {
+            const category = doc.data() as { category: string }
+            categories.push(category.category)
+        });
+
+        return categories
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+export const toggleRecipeVisibility = async (id: string, isPublic: boolean) => {
+    try {
+        const recipeRef = doc(database, COLLECTION_NAMES.recipes, id)
+        console.log("does it get here?")
+        await updateDoc(recipeRef, {
+            isPublic
+        });
+
+        window.location.reload()
+    } catch (error) {
+        console.error(error)
+        return
     }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { deleteRecipe, fetchRecipe } from "../../services/recipes";
+import { deleteRecipe, fetchRecipe, toggleRecipeVisibility } from "../../services/recipes";
 import { Recipe } from "../../types";
 import toast from "react-hot-toast";
 
@@ -22,7 +22,7 @@ interface RecipeDetailProps {
 
 export default function RecipeDetail({ params }: RecipeDetailProps) {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
-  const [isPublic, setIsPublic] = useState(false)
+  const [isPublic, setIsPublic] = useState(recipe?.isPublic)
   const [loading, setLoading] = useState("");
   const router = useRouter()
 
@@ -54,10 +54,16 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
     };
   }, [params.id]);
 
-  async function onDeleteRecipe() {
-    console.log("delete clicked")
-    if (params.id) console.log(params.id)
+  useEffect(() => {
+   const togglePublicView = async () => {
+    console.log("execute")
+    await toggleRecipeVisibility(params.id, isPublic!)
+   }
 
+   togglePublicView()
+  }, [isPublic, params.id])
+
+  async function onDeleteRecipe() {
     try {
       await deleteRecipe(params.id)
       toast.success("deleted!")
@@ -90,15 +96,15 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
             <TrashIcon onClick={() => onDeleteRecipe()} className="w-4 h-4 text-red-600" />
           </button>
           <button>
-            {!isPublic ? (
-              <EyeOff onClick={() => setIsPublic(prev => !prev)} className="w-5 h-5 text-blue-400 cursor-pointer" />
+            {!recipe?.isPublic ? (
+              <EyeOff onClick={() => setIsPublic(true)} className="w-5 h-5 text-blue-400 cursor-pointer" />
             ) : (
-              <Eye onClick={() => setIsPublic(prev => !prev)} className="w-5 h-5 text-blue-400 cursor-pointer" />
+              <Eye onClick={() => setIsPublic(false)} className="w-5 h-5 text-blue-400 cursor-pointer" />
             )}
           </button>
         </div>
       </div>
-      {isPublic && (
+      {recipe?.isPublic && (
         <div className="text-sm text-gray-500">
           copy link: <span className="font-bold">{`http://localhost:3000/recipe/${params.id}`}</span>
         </div>

@@ -8,5 +8,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export const COLLECTION_NAMES = {
   users: "USERS",
-  recipes: "RECIPES"
+  recipes: "RECIPES",
+  categories: "CATEGORIES",
 }

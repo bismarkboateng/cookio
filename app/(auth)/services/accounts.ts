@@ -1,12 +1,14 @@
 import { signInUserProps, UserAuthProps } from "../types"
 import { auth, database } from "@/lib/firebase-config";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { setUserSession } from "../helpers";
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword, signOut
+} from "firebase/auth";
+import { clearUserSession, setUserSession } from "../helpers";
+
 import { v4 as uuidv4 } from "uuid"
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
 import { COLLECTION_NAMES } from "@/lib/utils";
-
-
 
 
 export const createFirebaseUserAccount = async ({
@@ -33,11 +35,13 @@ export const signInUser = async ({
         console.log(values)
         setLoading("loading")
         const user = await signInWithEmailAndPassword(auth, values.email, values.password)
-        setUserSession(user.user.email!)
+        const token = await user.user.getIdToken()
+        setUserSession(token)
         setLoading("done")
     } catch (error) {
         console.error(error)
         setLoading("error")
+        return
     }
 
 }
@@ -47,9 +51,19 @@ export const addUserInfoToFirestore = async (fullName: string, email: string) =>
         await setDoc(doc(database, COLLECTION_NAMES.users, `${uuidv4()}`), {
             fullName,
             email,
-          });
+        });
     } catch (error) {
         console.error(error)
         return
     }
+}
+
+export const LogoutUser = async () => {
+    signOut(auth).then( async () => {
+       console.log("signed out")
+       // clear user session
+       await clearUserSession()
+    }).catch((error) => {
+        console.error(error)
+    })
 }
