@@ -17,10 +17,13 @@ import { signInUser } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Logo from "@/components/Logo"
+import { getUserSession } from "../../helpers"
+import { useAuthStore } from "@/store/auth/auth-store"
 
 
 
 export default function Signin() {
+  const setEmail = useAuthStore(state => state.setEmail)
   const router = useRouter()
   const [loading, setLoading] = useState("")
   const form = useForm<z.infer<typeof signInFormSchema>>({
@@ -35,6 +38,8 @@ export default function Signin() {
     console.log(values)
     try {
       await signInUser({values, setLoading})
+      const userEmail = getUserSession()
+      setEmail(userEmail!)
       router.push("/recipes")
     } catch (error) {
       console.log(error)

@@ -13,7 +13,7 @@ export default function Header() {
       <section className="flex items-center gap-8">
         <Logo />
         <ul className="flex items-center gap-5">
-          <li className={li_styles}>Recipes</li>
+          <li className={li_styles}><Link href="/recipes">Recipes</Link></li>
           <li className={li_styles}>Categories</li>
           <li className={li_styles}>Favorites</li>
         </ul>

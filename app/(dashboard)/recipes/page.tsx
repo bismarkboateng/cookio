@@ -1,10 +1,33 @@
+import Link from "next/link";
+import RecipeCard from "../components/RecipeCard/RecipeCard";
+import { fetchAllRecipesFromFireStore } from "../services/recipes";
+import { RecipeFromDb } from "../types";
 
-export default function Recipe() {
+export default async function Recipe() {
+
+  const data: RecipeFromDb = await fetchAllRecipesFromFireStore() || [];
+
   return (
-    <section>
-      <div className="mt-10">
-       show all recipes
-      </div>
+    <section className="mt-10">
+      <section className="grid grid-cols-3 gap-5">
+      {data.map(item => (
+        <RecipeCard
+         key={item.category}
+         imageUrl="https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg"
+         category={item.category}
+         tags={item.tags}
+         title={item.title}
+         id={item.id}
+        />
+      ))}
+      {data.length == 0 && (
+        <div className="flex items-center justify-center">
+          <Link href="/recipes/add">
+            No recipes, <span className="underline text-blue-400">Click to create one</span>
+          </Link>
+        </div>
+      )}
+      </section>
     </section>
   )
 }

@@ -8,7 +8,7 @@ export default function AddRecipe() {
       Add a recipe
      </h1>
      <section>
-      <RecipeForm />
+      <RecipeForm type="Add" />
      </section>
     </section>
   )
