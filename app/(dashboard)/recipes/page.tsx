@@ -8,8 +8,8 @@ export default async function Recipe() {
   const data: RecipeFromDb = await fetchAllRecipesFromFireStore() || [];
 
   return (
-    <section className="mt-10">
-      <section className="grid grid-cols-3 gap-5">
+    <section className="mt-5 md:mt-10">
+      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {data.map(item => (
         <RecipeCard
          key={item.category}

@@ -48,8 +48,8 @@ export default function Signup() {
   } 
   
   return (
-    <section className="w-[30%] mx-auto mt-20 border border-gray-200 p-10
-    rounded">
+    <section className="w-[90%] md:w-[50%] lg:w-[40%] xl:w-[30%]
+    2xl:w-[25%] mx-auto mt-20 border border-gray-200 p-10 rounded">
      <div className="flex flex-col items-center justify-center mb-2">
       <Logo />
       <div className="mt-5 mb-5">Create an account with us!</div>

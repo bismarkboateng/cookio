@@ -123,7 +123,7 @@ export default function RecipeForm({ type, id }: Props) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-8 bg-white rounded-lg">
+    <div className="max-w-3xl mx-auto bg-white rounded-lg">
 
       <div className="mb-6">
         <Label htmlFor="title" className="block text-[#1F1D1B] text-lg font-medium mb-2">

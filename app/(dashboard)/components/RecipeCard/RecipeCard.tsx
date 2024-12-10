@@ -13,7 +13,7 @@ export default function RecipeCard({
     imageUrl, title, category, tags, id
 }: Props) {
   return (
-    <section className="max-w-sm mx-auto my-5 rounded-lg overflow-hidden shadow-lg bg-white">
+    <section className="max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg bg-white">
       <Link href={`/recipes/${id}`}>
       <div className="relative group cursor-pointer">
         <Image

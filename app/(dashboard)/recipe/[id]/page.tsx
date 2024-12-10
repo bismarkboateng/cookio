@@ -48,7 +48,7 @@ export default function ShareRecipe({ params }: ShareRecipeProps) {
   )
 
   return (
-    <section className="max-w-4xl mx-auto p-6 space-y-8 bg-white rounded-lg mt-5">
+    <section className="max-w-4xl mx-auto space-y-8 bg-white rounded-lg mt-5">
       <div className="relative flex items-center justify-between">
         <h1 className="text-3xl font-semibold text-gray-800">{recipe?.title}</h1>
       </div>

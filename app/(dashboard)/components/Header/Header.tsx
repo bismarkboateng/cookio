@@ -25,19 +25,10 @@ export default function Header() {
     fetchSession();
   }, [setAuth]);
 
-  const li_styles = "cursor-pointer text-sm font-medium text-black-color";
-
   return (
     <section className="flex justify-between mt-7">
       <section className="flex items-center gap-8">
         <Logo />
-        <ul className="flex items-center gap-5">
-          <li className={li_styles}>
-            <Link href="/recipes">Recipes</Link>
-          </li>
-          <li className={li_styles}>Categories</li>
-          <li className={li_styles}>Favorites</li>
-        </ul>
       </section>
 
       {isAuth ? (

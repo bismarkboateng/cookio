@@ -17,7 +17,6 @@ import { signInUser } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Logo from "@/components/Logo"
-
 import { useAuthStore } from "@/store/auth/auth-store"
 import Link from "next/link"
 import toast from "react-hot-toast"
@@ -51,8 +50,8 @@ export default function Signin() {
   }
   
   return (
-    <section className="w-[30%] mx-auto mt-20 border border-gray-200 p-10
-    rounded">
+    <section className="w-[90%] md:w-[50%] lg:w-[40%] xl:w-[30%]
+    2xl:w-[25%] mx-auto mt-20 border border-gray-200 p-10 rounded">
      <div className="flex flex-col items-center justify-center mb-2">
       <Logo />
       <div className="mt-5 mb-5">Welcome back!</div>

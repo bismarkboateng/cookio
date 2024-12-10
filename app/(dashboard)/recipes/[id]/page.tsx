@@ -81,8 +81,8 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
   )
 
   return (
-    <section className="max-w-4xl mx-auto p-6 space-y-8 bg-white rounded-lg mt-5">
-      <div className="relative flex items-center justify-between">
+    <section className="max-w-4xl mx-auto space-y-8 bg-white rounded-lg mt-5">
+      <div className="relative flex flex-col flex-start md:flex-row md:items-center md:justify-between">
         <h1 className="text-3xl font-semibold text-gray-800">{recipe?.title}</h1>
 
         <div className="flex">
