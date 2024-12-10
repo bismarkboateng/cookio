@@ -1,11 +1,12 @@
 import { database } from "@/lib/firebase-config";
 import { COLLECTION_NAMES } from "@/lib/utils";
-import { doc, setDoc, getDoc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, deleteDoc, updateDoc, query, where } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid"
 
 import { collection, getDocs } from "firebase/firestore";
 import { Recipe } from "../types";
 import { revalidatePath } from "next/cache";
+import { getUserSession } from "@/app/(auth)/helpers";
 
 
 type Props = {
@@ -18,10 +19,12 @@ type Props = {
     instructions: string[],
     imageUrl: string,
     isPublic: boolean;
+    token: string;
 }
 
 export const addRecipeToFireStore = async ({
-    formValues, category, instructions, imageUrl, isPublic
+    formValues, category, instructions,
+    imageUrl, isPublic, token
 }: Props) => {
 
     try {
@@ -31,6 +34,7 @@ export const addRecipeToFireStore = async ({
             instructions,
             imageUrl,
             isPublic,
+            token,
         });
         revalidatePath("/recipes")
         window.location.reload()
@@ -41,23 +45,51 @@ export const addRecipeToFireStore = async ({
 
 
 
-export const fetchAllRecipesFromFireStore = async () => {
+// export const fetchAllRecipesFromFireStore = async () => {
+//     const token = await getUserSession()
+
+//     try {
+
+//         const data: Recipe[] = []
+
+//         const querySnapshot = await getDocs(collection(database, COLLECTION_NAMES.recipes));
+//         querySnapshot.forEach((doc) => {
+//             const recipe = doc.data() as Recipe;
+//             const id = doc.id
+//             data.push({ ...recipe, id });
+//         });
+
+//         return data
+//     } catch (error) {
+//         console.error(error)
+//     }
+// }
+
+
+export const fetchAllRecipesFromFireStore = async (token: string) => {
+
     try {
+        const data: Recipe[] = [];
 
-        const data: Recipe[] = []
+        const recipesQuery = query(
+            collection(database, COLLECTION_NAMES.recipes),
+            where("token", "==", token)
+        );
 
-        const querySnapshot = await getDocs(collection(database, COLLECTION_NAMES.recipes));
+        const querySnapshot = await getDocs(recipesQuery);
+
         querySnapshot.forEach((doc) => {
             const recipe = doc.data() as Recipe;
-            const id = doc.id
+            const id = doc.id;
             data.push({ ...recipe, id });
         });
 
-        return data
+        return data;
     } catch (error) {
-        console.error(error)
+        console.error("Error fetching recipes: ", error);
+        throw new Error("Failed to fetch recipes");
     }
-}
+};
 
 export const fetchRecipe = async (docId: string) => {
     try {

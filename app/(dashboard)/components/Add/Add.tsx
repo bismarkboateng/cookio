@@ -16,6 +16,7 @@ import { addRecipeToFireStore, fetchCategories, fetchRecipe, updateRecipe } from
 import { useRouter } from "next/navigation";
 import { Recipe } from "../../types";
 import { uploadRecipeImageToStorage } from "../../utils";
+import { getUserSession } from "@/app/(auth)/helpers";
 
 type Props = {
   type: string;
@@ -73,20 +74,19 @@ export default function RecipeForm({ type, id }: Props) {
   }, [id, type])
 
   const handleSubmit = async () => {
+    const token = await getUserSession()
     switch (type) {
       case "Add":
-        // add data to db
         try {
           setLoading("loading")
           const uploadedUrl = await uploadRecipeImageToStorage(image as File)
-          console.log(uploadedUrl)
-          // TODO: check the file uploading
           const info = await addRecipeToFireStore({
             formValues,
             category,
             instructions,
             imageUrl: uploadedUrl,
-            isPublic: false
+            isPublic: false,
+            token: token!,
           })
           console.log(info)
           setLoading("done")

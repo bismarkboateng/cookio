@@ -2,10 +2,13 @@ import Link from "next/link";
 import RecipeCard from "../components/RecipeCard/RecipeCard";
 import { fetchAllRecipesFromFireStore } from "../services/recipes";
 import { RecipeFromDb } from "../types";
+import { getUserSession } from "@/app/(auth)/helpers";
 
 export default async function Recipe() {
 
-  const data: RecipeFromDb = await fetchAllRecipesFromFireStore() || [];
+  const token = await getUserSession()
+
+  const data: RecipeFromDb = await fetchAllRecipesFromFireStore(token!) || [];
 
   return (
     <section className="mt-5 md:mt-10">
