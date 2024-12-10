@@ -75,7 +75,8 @@ export default function RecipeForm({ type, id }: Props) {
             formValues,
             category,
             instructions,
-            imageUrl: "https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg"
+            imageUrl: "https://mefqhwyqvulppvkkfqxb.supabase.co/storage/v1/object/public/recipe-images/recipe.jpg",
+            isPublic: false
           })
           console.log(info)
           setLoading("done")

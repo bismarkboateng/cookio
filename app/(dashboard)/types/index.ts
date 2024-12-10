@@ -6,6 +6,7 @@ export type Recipe = {
     title: string;
     description: string;
     id: string;
+    isPublic?: boolean;
 }
 
 export type RecipeFromDb = Recipe[]

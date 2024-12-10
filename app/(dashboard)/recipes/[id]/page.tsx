@@ -10,6 +10,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+import { Eye, EyeOff } from "lucide-react"
+
+
+
 interface RecipeDetailProps {
   params: {
     id: string;
@@ -18,8 +22,10 @@ interface RecipeDetailProps {
 
 export default function RecipeDetail({ params }: RecipeDetailProps) {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [isPublic, setIsPublic] = useState(false)
   const [loading, setLoading] = useState("");
   const router = useRouter()
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,16 +81,30 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
 
         <div className="flex">
           <Link href={`/recipes/${params.id}/update`}>
-           <button className="p-2 rounded-full hover:bg-gray-100 focus:outline-none">
-            <EditIcon className="w-4 h-4 text-blue-600" />
-           </button>        
+            <button className="p-2 rounded-full hover:bg-gray-100 focus:outline-none">
+              <EditIcon className="w-4 h-4 text-blue-600" />
+            </button>
           </Link>
           <button onClick={() => onDeleteRecipe()} className="p-2 rounded-full hover:bg-gray-100 focus:outline-none
           cursor-pointer">
             <TrashIcon onClick={() => onDeleteRecipe()} className="w-4 h-4 text-red-600" />
           </button>
+          <button>
+            {!isPublic ? (
+              <EyeOff onClick={() => setIsPublic(prev => !prev)} className="w-5 h-5 text-blue-400 cursor-pointer" />
+            ) : (
+              <Eye onClick={() => setIsPublic(prev => !prev)} className="w-5 h-5 text-blue-400 cursor-pointer" />
+            )}
+          </button>
         </div>
       </div>
+      {isPublic && (
+        <div className="text-sm text-gray-500">
+          copy link: <span className="font-bold">{`http://localhost:3000/recipe/${params.id}`}</span>
+        </div>
+      )}
+
+
 
       <div className="flex gap-1 flex-wrap">
         {recipe?.tags?.split(",")?.map((tag, index) => (

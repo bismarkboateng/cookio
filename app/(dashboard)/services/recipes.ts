@@ -17,10 +17,11 @@ type Props = {
     category: string;
     instructions: string[],
     imageUrl: string,
+    isPublic: boolean;
 }
 
 export const addRecipeToFireStore = async ({
-    formValues, category, instructions, imageUrl
+    formValues, category, instructions, imageUrl, isPublic
 }: Props) => {
 
     try {
@@ -29,6 +30,7 @@ export const addRecipeToFireStore = async ({
             category,
             instructions,
             imageUrl,
+            isPublic,
         });
         revalidatePath("/recipes")
     } catch (error) {
