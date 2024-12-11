@@ -32,7 +32,6 @@ export const signInUser = async ({
     values, setLoading
 }: signInUserProps) => {
     try {
-        console.log(values)
         setLoading("loading")
         const user = await signInWithEmailAndPassword(auth, values.email, values.password)
         const token = await user.user.getIdToken()

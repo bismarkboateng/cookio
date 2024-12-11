@@ -8,25 +8,16 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, ArrowRight, Loader2Icon } from "lucide-react";
 import SelectCategory from "../SelectCategory";
-import {
-  getImageSource,
-  handleInstructionsChange,
-  handleNextStep,
-  handlePreviousStep,
-} from "../../helpers";
+import { getImageSource, handleInstructionsChange, handleNextStep, handlePreviousStep } from "../../helpers";
 
 import FileUploader from "../FileUploader";
 import toast from "react-hot-toast";
-import {
-  addRecipeToFireStore,
-  fetchCategories,
-  fetchRecipe,
-  updateRecipe,
-} from "../../services/recipes";
+import { addRecipeToFireStore, fetchCategories, fetchRecipe, updateRecipe } from "../../services/recipes";
 import { useRouter } from "next/navigation";
+
 import { Recipe } from "../../types";
 import { uploadRecipeImageToStorage } from "../../utils";
-import { getUserSession } from "@/app/(auth)/helpers";
+import { getEmailFromCookies } from "@/app/(auth)/helpers";
 
 type Props = {
   type: string;
@@ -93,7 +84,7 @@ export default function RecipeForm({ type, id }: Props) {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const token = await getUserSession();
+    const email = await getEmailFromCookies();
     const uploadedUrl = await uploadRecipeImageToStorage(image as File);
     switch (type) {
       case "Add":
@@ -105,12 +96,12 @@ export default function RecipeForm({ type, id }: Props) {
             instructions,
             imageUrl: uploadedUrl,
             isPublic: false,
-            token: token!,
+            email: email!,
           });
           console.log(info);
           setLoading("done");
           toast.success("recipe created!");
-          router.push("/recipes");
+          router.push("/recipes")
         } catch (error) {
           console.error(error);
           toast.error("error, try again");

@@ -18,12 +18,12 @@ type Props = {
     instructions: string[],
     imageUrl: string,
     isPublic: boolean;
-    token: string;
+    email: string;
 }
 
 export const addRecipeToFireStore = async ({
     formValues, category, instructions,
-    imageUrl, isPublic, token
+    imageUrl, isPublic, email
 }: Props) => {
 
     try {
@@ -33,24 +33,23 @@ export const addRecipeToFireStore = async ({
             instructions,
             imageUrl,
             isPublic,
-            token,
+            email,
         });
         revalidatePath("/recipes")
-        window.location.reload()
     } catch (error) {
         console.error(error)
     }
 }
 
 
-export const fetchAllRecipesFromFireStore = async (token: string) => {
+export const fetchAllRecipesFromFireStore = async (email: string) => {
 
     try {
         const data: Recipe[] = [];
 
         const recipesQuery = query(
             collection(database, COLLECTION_NAMES.recipes),
-            where("token", "==", token)
+            where("email", "==", email)
         );
 
         const querySnapshot = await getDocs(recipesQuery);

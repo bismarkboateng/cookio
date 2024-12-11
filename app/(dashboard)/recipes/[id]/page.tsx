@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { Eye, EyeOff } from "lucide-react"
+import { getEmailFromCookies } from "@/app/(auth)/helpers";
 
 
 
@@ -56,12 +57,23 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
 
   useEffect(() => {
    const togglePublicView = async () => {
-    console.log("execute")
     await toggleRecipeVisibility(params.id, isPublic!)
    }
 
    togglePublicView()
   }, [isPublic, params.id])
+
+  useEffect(() => {
+    const fetchUserSession = async () => {
+      const email = await getEmailFromCookies();
+
+      if (!email) {
+        router.push("/account/sign-in");
+      }
+    };
+
+    fetchUserSession();
+  }, [router])
 
   async function onDeleteRecipe() {
     try {
@@ -106,7 +118,7 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
       </div>
       {recipe?.isPublic && (
         <div className="text-sm text-gray-500">
-          copy link: <span className="font-bold">{`${process.env.DOMAIN}/recipe/${params.id}`}</span>
+          copy link: <span className="font-bold">{`${process.env.NEXT_PUBLIC_DOMAIN}/recipe/${params.id}`}</span>
         </div>
       )}
 

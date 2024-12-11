@@ -20,6 +20,7 @@ import Logo from "@/components/Logo"
 import { useAuthStore } from "@/store/auth/auth-store"
 import Link from "next/link"
 import toast from "react-hot-toast"
+import { setEmailInCookies } from "../../helpers"
 
 
 
@@ -43,6 +44,7 @@ export default function Signin() {
         return
       }
       setEmail(values.email)
+      await setEmailInCookies(values.email)
       toast.success("signed in")
       router.push("/recipes")
     } catch (error) {

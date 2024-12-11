@@ -7,7 +7,7 @@ import Logo from "@/components/Logo";
 
 import { LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
-import { clearUserSession, getUserSession } from "@/app/(auth)/helpers";
+import { clearUserEmailFromCookies, clearUserSession, getUserSession } from "@/app/(auth)/helpers";
 
 import { useAuthStore } from "@/store/auth/auth-store";
 import { signOut } from "firebase/auth";
@@ -35,6 +35,7 @@ export default function Header() {
     signOut(auth).then( async () => {
       console.log("signed out")
       await clearUserSession()
+      await clearUserEmailFromCookies()
    }).catch((error) => {
        console.error(error)
        setLoading(false)
