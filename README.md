@@ -37,7 +37,7 @@ To get started with Cookio, follow these steps:
 
 ```bash
 git clone https://github.com/yourusername/cookio.git
-cd recipe-app
+cd cookio
 
 ```
 ### 2. Install Dependencies
