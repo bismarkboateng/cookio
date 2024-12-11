@@ -38,6 +38,7 @@ export const signInUser = async ({
         const token = await user.user.getIdToken()
         setUserSession(token)
         setLoading("done")
+        return user
     } catch (error) {
         console.error(error)
         setLoading("error")

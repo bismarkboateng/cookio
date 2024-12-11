@@ -13,11 +13,7 @@ export const uploadRecipeImageToStorage = async (fileToUpload: File) => {
             console.error(error);
             throw new Error(`Error uploading file: ${error.message}`);
         }
-
         const { data: { publicUrl }} = await supabase.storage.from("recipe-images").getPublicUrl(data.path);
-
-        console.log("Uploaded file data:", data);
-        console.log("Public URL:", publicUrl);
 
         return publicUrl;
     } catch (error) {

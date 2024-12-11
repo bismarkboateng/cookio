@@ -36,14 +36,18 @@ export default function Signin() {
   })
 
   async function onSubmit(values: z.infer<typeof signInFormSchema>) {
-    console.log(values)
     try {
-      await signInUser({values, setLoading})
+      const val = await signInUser({values, setLoading})
+      if (!val) {
+        toast.error("error, try again")
+        return
+      }
       setEmail(values.email)
       toast.success("signed in")
       router.push("/recipes")
     } catch (error) {
       console.log(error)
+      toast.error("error")
       setLoading("")
       return
     }
@@ -67,7 +71,7 @@ export default function Signin() {
               <FormControl className="focus:outline-offset-0">
                 <Input
                  type="email"
-                 className="focus:outline-offset-0 focus:outline-ring-0"
+                 className="shad-input focus:outline-offset-0 focus:outline-ring-0"
                  required
                  placeholder="email" {...field}
                 />
@@ -86,6 +90,7 @@ export default function Signin() {
                 <Input
                  type="password"
                  required
+                 className="shad-input"
                  placeholder="******" {...field}
                 />
               </FormControl>              

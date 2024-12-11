@@ -42,3 +42,8 @@ export const handleInstructionsChange = (
     updatedInstructions[stepIndex] = event.target.value;
     setInstructions(updatedInstructions);
 };
+
+
+export function getImageSource(image: File | string | null, uploadedUrl: string) {
+    return (image instanceof File) ? uploadedUrl : (typeof image === "string" ? image : uploadedUrl);
+  }

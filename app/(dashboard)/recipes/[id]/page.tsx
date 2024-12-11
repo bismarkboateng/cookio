@@ -106,7 +106,7 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
       </div>
       {recipe?.isPublic && (
         <div className="text-sm text-gray-500">
-          copy link: <span className="font-bold">{`http://localhost:3000/recipe/${params.id}`}</span>
+          copy link: <span className="font-bold">{`${process.env.DOMAIN}/recipe/${params.id}`}</span>
         </div>
       )}
 

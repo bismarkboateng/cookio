@@ -15,9 +15,9 @@ export default function UpdateRecipe({ params }: RecipeDetailProps) {
      </h1>
      <section>
       <RecipeForm
-      type="Update"
-      id={params.id}
-    />
+       type="Update"
+       id={params.id}
+      />
      </section>
     </section>
   )

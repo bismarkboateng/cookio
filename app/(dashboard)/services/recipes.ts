@@ -43,28 +43,6 @@ export const addRecipeToFireStore = async ({
 }
 
 
-
-// export const fetchAllRecipesFromFireStore = async () => {
-//     const token = await getUserSession()
-
-//     try {
-
-//         const data: Recipe[] = []
-
-//         const querySnapshot = await getDocs(collection(database, COLLECTION_NAMES.recipes));
-//         querySnapshot.forEach((doc) => {
-//             const recipe = doc.data() as Recipe;
-//             const id = doc.id
-//             data.push({ ...recipe, id });
-//         });
-
-//         return data
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }
-
-
 export const fetchAllRecipesFromFireStore = async (token: string) => {
 
     try {
@@ -183,7 +161,6 @@ export const fetchCategories = async () => {
 export const toggleRecipeVisibility = async (id: string, isPublic: boolean) => {
     try {
         const recipeRef = doc(database, COLLECTION_NAMES.recipes, id)
-        console.log("does it get here?")
         await updateDoc(recipeRef, {
             isPublic
         });

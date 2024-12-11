@@ -72,3 +72,7 @@
     @apply bg-background text-foreground;
     }
 }
+
+.shad-input {
+  @apply focus-visible:ring-0 focus-visible:ring-offset-0 !important;
+}

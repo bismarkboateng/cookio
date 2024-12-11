@@ -2,17 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Loader2Icon, Plus } from "lucide-react";
 import Logo from "@/components/Logo";
 
 import { LogOut } from "lucide-react";
-import { LogoutUser } from "@/app/(auth)/services/accounts";
-import { useEffect } from "react";
-import { getUserSession } from "@/app/(auth)/helpers";
+import { useEffect, useState } from "react";
+import { clearUserSession, getUserSession } from "@/app/(auth)/helpers";
+
 import { useAuthStore } from "@/store/auth/auth-store";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase-config";
+
+
 
 export default function Header() {
   const { isAuth, setAuth } = useAuthStore((state) => state);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -24,6 +29,18 @@ export default function Header() {
 
     fetchSession();
   }, [setAuth]);
+
+  async function onLogoutHandler() {
+    setLoading(true)
+    signOut(auth).then( async () => {
+      console.log("signed out")
+      await clearUserSession()
+   }).catch((error) => {
+       console.error(error)
+       setLoading(false)
+   })
+   setLoading(false)
+  }
 
   return (
     <section className="flex justify-between mt-7">
@@ -45,12 +62,17 @@ export default function Header() {
           <div
             className="bg-gray-100 p-2 rounded-full hover:bg-orange-color hover:text-white
       transition-all duration-500"
+            onClick={onLogoutHandler}
           >
-            <LogOut
-              onClick={LogoutUser}
-              className="text-sm cursor-pointer"
-              size={18}
-            />
+            {loading ? (
+              <Loader2Icon className="w-4 h-4 animate-spin" />
+            ) : (
+              <LogOut
+                onClick={onLogoutHandler}
+                className="text-sm cursor-pointer"
+                size={18}
+              />
+            )}
           </div>
         </section>
       ) : (
@@ -65,7 +87,6 @@ export default function Header() {
           </Link>
         </section>
       )}
-      
     </section>
   );
 }

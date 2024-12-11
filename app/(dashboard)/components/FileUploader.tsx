@@ -2,7 +2,7 @@
 
 import { Label } from "@/components/ui/label"
 import { ChangeEvent, useEffect, useState } from "react";
-import { UploadIcon } from "lucide-react"; // Assuming you have an icon library
+import { UploadIcon } from "lucide-react";
 import Image from "next/image";
 
 
@@ -12,26 +12,27 @@ export default function FileUploader({
 
   const [image, setImage] = useState<string | null>(null);
 
-
   const handleSelectImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target?.files?.[0]
 
     console.log(file)
     if (file) {
       returnImageUrl(file)
-      console.log(`${URL.createObjectURL(file)}.png`)
       setImage(URL.createObjectURL(file));
     }
-
   }
 
   useEffect(() => {
     if (uploadedUrl && uploadedUrl !== image) {
-      setImage(uploadedUrl as string)
+      if (uploadedUrl instanceof File) {
+        const imageUrl = URL.createObjectURL(uploadedUrl);
+        setImage(imageUrl)
+      }
+      if (typeof uploadedUrl === "string") {
+        setImage(uploadedUrl as string)
+      }
     }
-  }, [uploadedUrl, image])
-
-  
+  }, [])
 
 
   return (
@@ -55,6 +56,7 @@ export default function FileUploader({
           <input
             type="file"
             id="image"
+            
             accept="image/*"
             onChange={handleSelectImage}
             className="hidden"

@@ -65,7 +65,7 @@ export default function Signup() {
               <FormControl className="focus:outline-offset-0">
                 <Input
                  type="text"
-                 className="focus:outline-offset-0 focus:outline-ring-0"
+                 className="shad-input focus:outline-offset-0 focus:outline-ring-0"
                  required
                  placeholder="Evans Ohio" {...field}
                 />
@@ -83,7 +83,7 @@ export default function Signup() {
               <FormControl className="focus:outline-offset-0">
                 <Input
                  type="email"
-                 className="focus:outline-offset-0 focus:outline-ring-0"
+                 className="shad-input focus:outline-offset-0 focus:outline-ring-0"
                  required
                  placeholder="email" {...field}
                 />
@@ -102,6 +102,7 @@ export default function Signup() {
                 <Input
                  type="password"
                  required
+                 className="shad-input"
                  placeholder="******" {...field}
                 />
               </FormControl>              
