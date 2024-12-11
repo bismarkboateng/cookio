@@ -1,6 +1,6 @@
-# Recipe App
+# Cookio
 
-This is a Recipe App built using **Next.js 14**. The app allows users to perform CRUD operations, generate shareable 
+Cookio is a recipe app built using **Next.js 14**. The app allows users to perform CRUD operations, generate shareable 
 links, and share them on popuplar platforms like whatsapp and twitter. It integrates with **Firebase Firestore** for data storage and management, and **Supabase Storage** for storing recipe images.
 This README will guide you through setting up and running the app locally.
 
