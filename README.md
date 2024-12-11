@@ -39,12 +39,16 @@ To get started with the Recipe App, follow these steps:
 git clone https://github.com/yourusername/recipe-app.git
 cd recipe-app
 
+```
 ### 2. Install Dependencies
 
 After cloning the repository, install the required dependencies using **npm** or **yarn**:
 
 ```bash
-npm install
+npm  i or 
+yarn
+
+```
 
 
 ## Setup Firebase
@@ -73,6 +77,7 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=your-project-id
 NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your-storage-bucket
 NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
 NEXT_PUBLIC_FIREBASE_APP_ID=your-app-id
+```
 
 ## Running Locally
 
@@ -83,8 +88,8 @@ Now that everything is set up, you can run the app locally.
 Run the following command to start the Next.js development server:
 
 ```bash
-npm run dev
-
+npm run dev or yarn dev
+```
 
 By default, the app will be available at http://localhost:3000.
 
