@@ -26,7 +26,7 @@ This README will guide you through setting up and running the app locally.
 
 ## Installation
 
-To get started with the Recipe App, follow these steps:
+To get started with Cookio, follow these steps:
 
 ### Prerequisites
 
@@ -36,7 +36,7 @@ To get started with the Recipe App, follow these steps:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/recipe-app.git
+git clone https://github.com/yourusername/cookio.git
 cd recipe-app
 
 ```
@@ -95,15 +95,14 @@ By default, the app will be available at http://localhost:3000.
 
 ## Open the App
 
-Open your browser and navigate to http://localhost:3000. You should see the Recipe App running locally!
+Open your browser and navigate to http://localhost:3000. You should see Cookio running locally!
 
 ## Technologies Used
 
 - **Next.js 14**: The React framework for building the app.
 - **Firebase**: Firestore for data storage and authentication.
 - **Tailwind CSS**: Utility-first CSS framework for styling the app.
-- **TypeScript**: For type safety (if you're using TypeScript).
-- **Vercel**: For deploying the app to production.
+- **TypeScript**: For type safety.
 
 ---
 
