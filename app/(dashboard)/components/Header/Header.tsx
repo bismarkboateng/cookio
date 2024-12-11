@@ -44,7 +44,7 @@ export default function Header() {
   }
 
   return (
-    <section className="flex justify-between mt-7">
+    <section className="flex justify-between items-center mt-7">
       <section className="flex items-center gap-8">
         <Logo />
       </section>

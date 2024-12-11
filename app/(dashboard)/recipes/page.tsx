@@ -23,7 +23,6 @@ export default function Recipe() {
     }
 
     fetchInfo()
-
   }, [])
 
   return (
