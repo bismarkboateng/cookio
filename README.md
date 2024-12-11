@@ -108,7 +108,7 @@ Open your browser and navigate to http://localhost:3000. You should see Cookio r
 
 ## Contributing
 
-Contributions are welcome! If you'd like to contribute to the Recipe App, follow these steps:
+Contributions are welcome! If you'd like to contribute Cookio, follow these steps:
 
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-branch`).
