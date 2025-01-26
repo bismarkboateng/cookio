@@ -7,11 +7,9 @@ export default function Logo() {
             <Image
                 alt="logo"
                 src="/images/logo.png"
-                width={48}
-                height={48}
-                className="w-[48px] h-[48px]"
+                width={125}
+                height={40.25}
             />
-            <span className="text-2xl font-medium text-black-color">Cookio</span>
         </Link>
     )
 }

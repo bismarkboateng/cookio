@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Loader2Icon, Plus } from "lucide-react";
-import Logo from "@/components/Logo";
+import Logo from "@/components/composites/logo/logo";
 
 import { LogOut } from "lucide-react";
 import { useEffect, useState } from "react";

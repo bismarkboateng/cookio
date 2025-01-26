@@ -1,17 +1,21 @@
-import Categories from "@/components/Categories/Categories";
-import Footer from "@/components/Footer/Footer";
-import Header from "@/components/Header/Header";
-import Navbar from "@/components/Navbar/Navbar";
-import Newsletter from "@/components/Newsletter/Newsletter";
-import ShareRecipe from "@/components/ShareRecipe/ShareRecipe";
+import Categories from "@/components/composites/categories/categories";
+import Features from "@/components/composites/features/features";
+import Footer from "@/components/composites/footer/footer";
+import Header from "@/components/composites/header/header";
 
-export default function page() {
+import Navbar from "@/components/composites/navbar/navbar";
+import Newsletter from "@/components/composites/newsletter/newsletter";
+import ShareRecipe from "@/components/composites/share-recipe/share-recipe";
+
+
+export default function Home() {
   return (
     <main>
      <Navbar />
      <Header />
-     <ShareRecipe />
+     <Features />
      <Categories />
+     <ShareRecipe />
      <Newsletter />
      <Footer />
     </main>

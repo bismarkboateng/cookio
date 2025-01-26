@@ -16,7 +16,7 @@ import { useState } from "react"
 import { createFirebaseUserAccount } from "../../services/accounts"
 import { Loader2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import Logo from "@/components/Logo"
+import Logo from "@/components/composites/logo/logo"
 import Link from "next/link"
 import toast from "react-hot-toast"
 
