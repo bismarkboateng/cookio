@@ -15,7 +15,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link href="#" className={liClasses}>
-            About Cookio
+            About Recipa
           </Link>
           <Link href="#" className={liClasses}>
             Recipes

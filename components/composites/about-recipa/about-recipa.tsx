@@ -9,7 +9,7 @@ export default function AboutRecipa() {
       <div className="w-1/2 flex flex-col gap-5">
         <IndicatorText title="About me" />
         <Text className="text-[50px] font-bold leading-[50px]">
-          Lucia Delgado's journey from kitchen whiz to digital
+          Lucia Delgado's journey from kitchen whiz to digital {" "}
           <span className="text-green">culinary star.</span>
         </Text>
         <Text className="text-grey font-medium w-[60%] leading-5">
