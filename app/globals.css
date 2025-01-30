@@ -76,3 +76,8 @@
 .shad-input {
   @apply focus-visible:ring-0 focus-visible:ring-offset-0 !important;
 }
+
+.input-hover:active,
+.input-hover:focus {
+  border-color: #00693d;
+}

@@ -2,7 +2,7 @@
 
 
 import Link from "next/link";
-import RecipeCard from "../components/RecipeCard/RecipeCard";
+import RecipeCard from "@/components/composites/recipe-card/recipe-card";
 import { fetchAllRecipesFromFireStore } from "../services/recipes";
 import { RecipeFromDb } from "../types";
 
@@ -25,6 +25,7 @@ export default function Recipe() {
     fetchInfo()
   }, [])
 
+
   return (
     <section className="mt-5 md:mt-10">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -36,12 +37,13 @@ export default function Recipe() {
          tags={item.tags}
          title={item.title}
          id={item.id}
+         
         />
       ))}
       {recipes.length == 0 && (
         <div className="flex items-center justify-center">
           <Link href="/recipes/add">
-            No recipes, <span className="underline text-blue-400">Click to create one</span>
+            No recipes, <span className="underline text-green">Click to create one</span>
           </Link>
         </div>
       )}

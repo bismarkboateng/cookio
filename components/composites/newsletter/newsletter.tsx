@@ -10,7 +10,7 @@ export default function NewsLetter() {
         Sign up for our newsletter
       </Text>
       <div className="flex w-full max-w-sm items-center space-x-2">
-        <Input type="email" className="shad-input" placeholder="Enter your email..." />
+        <Input type="email" className="shad-input input-hover" placeholder="Enter your email..." />
         <Button
           type="submit"
           className="w-[44px] h-[44px] rounded-full bg-gradient-to-tr from-[#3898EC] to-green"

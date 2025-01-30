@@ -6,13 +6,27 @@ import RecipeCardBanner from "../recipe-card-banner/recipe-card-banner";
 import Text from "@/components/ui/text";
 import Link from "next/link";
 
-export default function RecipeCard() {
+type Props = {
+  imageUrl?: string;
+  title?: string;
+  category?: string;
+  tags?: string;
+  id?: string;
+};
+
+export default function RecipeCard({
+  imageUrl,
+  title,
+  category,
+  tags,
+  id,
+}: Props) {
   return (
     <Card className="p-0 rounded-lg shadow border-none bg-white">
       <CardHeader className="p-0">
         <div className="relative">
           <Image
-            src="/images/recipe-1.jpeg"
+            src={imageUrl || "/images/recipe-1.jpeg"}
             width={381.33}
             height={300}
             alt="recipe image"
@@ -24,12 +38,20 @@ export default function RecipeCard() {
       </CardHeader>
       <CardContent className="pt-3">
         <Text className="text-black text-lg font-bold">
-          Raspberry cheesecake delight
+          {title || "Raspberry cheesecake delight"}
         </Text>
         <Text className="text-grey font-medium">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          
+          {tags?.split(",").map((item) => (
+            <span
+              key={item}
+              className=" text-black italic text-xs rounded-full"
+            >
+              {item}
+            </span>
+          )) || "Lorem ipsum dolor sit amet, consectetur adipiscing elit"}
         </Text>
-        <Link href="#">
+        <Link href={`/recipes/${id}`}>
           <Text className="text-green underline text-base font-bold mt-2">
             View Recipe
           </Text>

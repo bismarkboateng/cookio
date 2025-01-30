@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google"
 import "./globals.css";
-import { Toaster } from "react-hot-toast"
+import { Toaster } from "sonner"
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -25,7 +25,7 @@ export default function RootLayout({
         className={`${roboto.className}`}
       >
         {children}
-      <Toaster />
+      <Toaster richColors position="top-right" />
       </body>
     </html>
   );
