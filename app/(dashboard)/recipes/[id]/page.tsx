@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { fetchRecipe, toggleRecipeVisibility } from "../../services/recipes";
-import { Recipe } from "@/types";
-import toast from "react-hot-toast";
+// import { fetchRecipe, toggleRecipeVisibility } from "../../services/recipes";
+// import { Recipe } from "@/types";
+// import toast from "react-hot-toast";
 
 import { EditIcon, Loader2Icon, TrashIcon } from "lucide-react";
 import Image from "next/image";
@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { getEmailFromCookies } from "@/app/(auth)/helpers";
 import useDeleteRecipe from "../../hooks/useDeleteRecipe";
+import { useGetRecipeById } from "../../hooks/useGetRecipeById";
 
 interface RecipeDetailProps {
   params: {
@@ -21,47 +22,48 @@ interface RecipeDetailProps {
 }
 
 export default function Page({ params }: RecipeDetailProps) {
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const recipe = useGetRecipeById(params.id) 
   const [isPublic, setIsPublic] = useState(recipe?.isPublic);
   const [loading, setLoading] = useState("");
   const router = useRouter();
-
+  
   const { handleDeleteRecipe } = useDeleteRecipe()
+  console.log(isPublic, setLoading)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading("loading");
-        const fetchedRecipe = (await fetchRecipe(params.id)) as Recipe;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       setLoading("loading");
+  //       const fetchedRecipe = (await fetchRecipe(params.id)) as Recipe;
 
-        if (fetchedRecipe) {
-          setRecipe(fetchedRecipe);
-        }
-        setLoading("done");
-      } catch (err) {
-        console.error(err);
-        setLoading("");
-        toast.error("failed");
-      } finally {
-        setLoading("done");
-      }
-    };
+  //       if (fetchedRecipe) {
+  //         setRecipe(fetchedRecipe);
+  //       }
+  //       setLoading("done");
+  //     } catch (err) {
+  //       console.error(err);
+  //       setLoading("");
+  //       toast.error("failed");
+  //     } finally {
+  //       setLoading("done");
+  //     }
+  //   };
 
-    fetchData();
+  //   fetchData();
 
-    return () => {
-      setLoading("");
-      setRecipe(null);
-    };
-  }, [params.id]);
+  //   return () => {
+  //     setLoading("");
+  //     setRecipe(null);
+  //   };
+  // }, [params.id]);
 
-  useEffect(() => {
-    const togglePublicView = async () => {
-      await toggleRecipeVisibility(params.id, isPublic!);
-    };
+  // useEffect(() => {
+  //   const togglePublicView = async () => {
+  //     await toggleRecipeVisibility(params.id, isPublic!);
+  //   };
 
-    togglePublicView();
-  }, [isPublic, params.id]);
+  //   togglePublicView();
+  // }, [isPublic, params.id]);
 
   useEffect(() => {
     const fetchUserSession = async () => {

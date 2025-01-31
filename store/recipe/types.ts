@@ -1,4 +1,4 @@
-import { RecipeFromDb } from "@/types"
+import { Recipe, RecipeFromDb } from "@/types"
 
 export type RecipeSliceType = {
     recipes: RecipeFromDb,
