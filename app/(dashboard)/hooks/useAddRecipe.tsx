@@ -30,6 +30,7 @@ export default function useAddRecipe() {
       toast.success("recipe created!");
       router.push("/recipes");
     } catch (error) {
+      console.error(error)
       toast.error("error, try again");
       setLoading("done");
       return;

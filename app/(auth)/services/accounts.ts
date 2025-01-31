@@ -41,6 +41,7 @@ export const signInUser = async ({ values, setLoading }: signInUserProps) => {
     setLoading("done");
     return user;
   } catch (error) {
+    console.error(error)
     setLoading("error");
     return;
   }

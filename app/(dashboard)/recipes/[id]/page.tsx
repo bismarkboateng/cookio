@@ -1,11 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  deleteRecipe,
-  fetchRecipe,
-  toggleRecipeVisibility,
-} from "../../services/recipes";
+import { fetchRecipe, toggleRecipeVisibility } from "../../services/recipes";
 import { Recipe } from "../../types";
 import toast from "react-hot-toast";
 

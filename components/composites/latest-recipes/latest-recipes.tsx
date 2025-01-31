@@ -18,7 +18,7 @@ export default function LatestRecipes() {
       </div>
       <div className="grid grid-cols-3 gap-5 mt-10">
         {[0, 1, 3, 4, 5, 6].map((item) => (
-          <RecipeCard />
+          <RecipeCard key={item} />
         ))}
       </div>
     </section>

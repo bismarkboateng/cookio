@@ -14,6 +14,7 @@ export default function useLogout() {
         await clearUserEmailFromCookies();
       })
       .catch((error) => {
+        console.error(error)
         setLoading(false);
       });
     setLoading(false);

@@ -26,6 +26,7 @@ export default function useSignIn() {
         toast.success("signed in");
         router.push("/recipes");
       } catch (error) {
+        console.error(error)
         toast.error("error");
         setLoading("");
         return;

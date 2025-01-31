@@ -31,7 +31,7 @@ export default function RecipeForm({ type, id }: Props) {
   const [category, setCategory] = useState("");
 
   const [allCategories, setAllCategories] = useState<string[] | undefined>(
-    undefinedw
+    undefined
   );
   const [image, setImage] = useState<null | File | string>(null);
   const [formValues, setFormValues] = useState({

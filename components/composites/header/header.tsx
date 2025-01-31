@@ -11,7 +11,7 @@ export default function Header() {
       <div className="w-1/2 flex flex-col gap-7">
         <IndicatorText title="Welcome to Recipe" />
         <Text className="text-[63px] font-bold leading-[60px]">
-          Come, let's savor the goodness of my
+          Come, let&apos;s savor the goodness of my
           {" "}<span className="text-green">nutritious.</span>
         </Text>
         <Text className="text-grey font-medium w-[60%] leading-5">

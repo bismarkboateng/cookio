@@ -21,6 +21,7 @@ export default function RecipeCard({
   tags,
   id,
 }: Props) {
+  console.log(category)
   return (
     <Card className="p-0 rounded-lg shadow border-none bg-white">
       <CardHeader className="p-0">

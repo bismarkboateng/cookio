@@ -7,8 +7,8 @@ export default function RecipeCardBanner() {
       className="absolute bottom-0 w-full px-5 flex flex-row items-center gap-3
         bg-[#ffffffcc] py-2 justify-around"
     >
-      {itemOnRecipeBanner.map((item) => (
-        <div className="flex flex-row items-center gap-1">
+      {itemOnRecipeBanner.map((item, index) => (
+        <div key={`${item.title}-${index}`} className="flex flex-row items-center gap-1">
           {item.icon}
           <Text className="text-green font-bold">{item.title}</Text>
         </div>
