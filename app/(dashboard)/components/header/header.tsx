@@ -6,18 +6,24 @@ import { CircleUserRound, Loader2Icon, Plus } from "lucide-react";
 import Logo from "@/components/composites/logo/logo";
 
 import { LogOut } from "lucide-react";
-import { useEffect, useState } from "react";
-import { clearUserEmailFromCookies, clearUserSession, getUserSession } from "@/app/(auth)/helpers";
+import { useEffect } from "react";
+import { getUserSession } from "@/app/(auth)/helpers";
 import { useAuthStore } from "@/store/auth/auth-store";
 
-import { signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase-config";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import Text from "@/components/ui/text";
+import useLogout from "@/app/(auth)/hooks/useLogout";
 
 export default function Header() {
+  const { onLogoutHandler, loading } = useLogout();
   const { isAuth, setAuth } = useAuthStore((state) => state);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -30,18 +36,8 @@ export default function Header() {
     fetchSession();
   }, [setAuth]);
 
-  async function onLogoutHandler() {
-    setLoading(true);
-    signOut(auth)
-      .then(async () => {
-        await clearUserSession();
-        await clearUserEmailFromCookies();
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
-    setLoading(false);
+  async function onLogout() {
+    onLogoutHandler();
   }
 
   return (
@@ -93,11 +89,11 @@ export default function Header() {
                       <Loader2Icon className="w-4 h-4 animate-spin text-white" />
                     ) : (
                       <>
-                       <Text className="text-green">Logout</Text>
-                       <LogOut
-                        onClick={onLogoutHandler}
-                        className="text-sm cursor-pointer text-green"
-                        size={18}
+                        <Text className="text-green">Logout</Text>
+                        <LogOut
+                          onClick={onLogout}
+                          className="text-sm cursor-pointer text-green"
+                          size={18}
                         />
                       </>
                     )}

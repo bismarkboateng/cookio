@@ -11,9 +11,8 @@ export const signInFormSchema = z.object({
   password: z.string().min(2).max(50),
 });
 
-
 export const signUpDefaultValues = {
   FullName: "",
   email: "",
-  password: ""
-}
+  password: "",
+};

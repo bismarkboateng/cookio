@@ -16,6 +16,7 @@ import Link from "next/link";
 
 import { Eye, EyeOff } from "lucide-react";
 import { getEmailFromCookies } from "@/app/(auth)/helpers";
+import useDeleteRecipe from "../../hooks/useDeleteRecipe";
 
 interface RecipeDetailProps {
   params: {
@@ -23,11 +24,13 @@ interface RecipeDetailProps {
   };
 }
 
-export default function RecipeDetail({ params }: RecipeDetailProps) {
+export default function Page({ params }: RecipeDetailProps) {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [isPublic, setIsPublic] = useState(recipe?.isPublic);
   const [loading, setLoading] = useState("");
   const router = useRouter();
+
+  const { handleDeleteRecipe } = useDeleteRecipe()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,14 +80,7 @@ export default function RecipeDetail({ params }: RecipeDetailProps) {
   }, [router]);
 
   async function onDeleteRecipe() {
-    try {
-      await deleteRecipe(params.id);
-      toast.success("deleted!");
-      router.push("/recipes");
-    } catch (error) {
-      console.error("error deleting", error);
-      toast.error("failed to delete");
-    }
+    handleDeleteRecipe(params.id)
   }
 
   if (loading === "loading")

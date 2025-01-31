@@ -1,10 +1,8 @@
 import React from "react";
-import TestimonialCard from "../testimonial-card/testimonial-card";
 import Image from "next/image";
-import { Leaf } from "lucide-react";
-import Link from "next/link";
 import Text from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
+
 import IndicatorText from "@/components/ui/indicator-text";
 
 export default function Header() {

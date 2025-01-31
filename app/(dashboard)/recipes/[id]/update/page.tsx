@@ -1,7 +1,7 @@
 "use client";
 
 import { getEmailFromCookies } from "@/app/(auth)/helpers";
-import RecipeForm from "@/app/(dashboard)/components/Add/Add";
+import RecipeForm from "@/app/(dashboard)/components/add/add";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -11,7 +11,7 @@ interface RecipeDetailProps {
   };
 }
 
-export default function UpdateRecipe({ params }: RecipeDetailProps) {
+export default function Page({ params }: RecipeDetailProps) {
   const router = useRouter()
 
   useEffect(() => {

@@ -52,7 +52,7 @@ export default function SelectCategory({
         >
           <SelectValue placeholder="Select category" />
         </SelectTrigger>
-        <SelectContent className="shad-input bg-white">
+        <SelectContent className=" bg-white">
          {categories && categories.map((category) => (
             <SelectItem className="shad-input" key={category} value={category}>{category}</SelectItem>
          ))}
@@ -60,8 +60,8 @@ export default function SelectCategory({
       </Select>
       <AlertDialog>
         <AlertDialogTrigger className="w-full mt-1">
-          <div className="text-blue-500w-full text-sm py-2 rounded-md hover:bg-orange-300 hover:text-white
-          transition-all duration-500">
+          <div className="text-blue-500w-full text-sm py-2 rounded-md hover:text-black
+            transition-all duration-500 border border-green">
             Add Category
           </div>
         </AlertDialogTrigger>

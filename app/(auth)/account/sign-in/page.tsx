@@ -6,32 +6,17 @@ import { z } from "zod";
 import { signInFormSchema } from "../../utils";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-
-import { signInUser } from "../../services/accounts";
 import { Loader2Icon } from "lucide-react";
-import { useRouter } from "next/navigation";
+
 import Logo from "@/components/composites/logo/logo";
-
-import { useAuthStore } from "@/store/auth/auth-store";
 import Link from "next/link";
-import { toast } from "sonner";
-import { setEmailInCookies } from "../../helpers";
 import Text from "@/components/ui/text";
+import useSignIn from "../../hooks/useSignIn";
 
-export default function Signin() {
-  const setEmail = useAuthStore((state) => state.setEmail);
-  const router = useRouter();
-  const [loading, setLoading] = useState("");
+export default function Page() {
+  const { handleSignIn, loading } = useSignIn()
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
     defaultValues: {
@@ -41,22 +26,7 @@ export default function Signin() {
   });
 
   async function onSubmit(values: z.infer<typeof signInFormSchema>) {
-    try {
-      const val = await signInUser({ values, setLoading });
-      if (!val) {
-        toast.error("error, try again");
-        return;
-      }
-      setEmail(values.email);
-      await setEmailInCookies(values.email);
-      toast.success("signed in");
-      router.push("/recipes");
-    } catch (error) {
-      console.log(error);
-      toast.error("error");
-      setLoading("");
-      return;
-    }
+   handleSignIn(values)
   }
 
   return (

@@ -6,41 +6,25 @@ import { z } from "zod"
 import { formSchema, signUpDefaultValues } from "../../utils"
 
 import { Button } from "@/components/ui/button"
-import {
-  Form, FormControl, FormField,
-  FormItem, FormLabel, FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useState } from "react"
 
-import { createFirebaseUserAccount } from "../../services/accounts"
-import { Loader2Icon } from "lucide-react"
-import { useRouter } from "next/navigation"
 import Logo from "@/components/composites/logo/logo"
-
 import Link from "next/link"
-import { toast } from "sonner"
+import useSignUp from "../../hooks/useSignUp"
+import { Loader2Icon } from "lucide-react"
 
 
 
-export default function Signup() {
-  const router = useRouter()
-  const [loading, setLoading] = useState("")
+export default function Page() {
+  const { handleSignUp, loading } = useSignUp()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: signUpDefaultValues,
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    try {
-      await createFirebaseUserAccount({values, setLoading})
-      toast.success("account created")
-      router.push("/account/sign-in")
-    } catch (error) {
-      console.error(error)
-      setLoading("")
-      return
-    }
+    handleSignUp(values)
   } 
   
   return (

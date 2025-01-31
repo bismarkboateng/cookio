@@ -7,17 +7,17 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, ArrowRight, Loader2Icon } from "lucide-react";
-import SelectCategory from "../SelectCategory";
-import { getImageSource, handleInstructionsChange, handleNextStep, handlePreviousStep } from "../../helpers";
+import SelectCategory from "../select-category";
+import { handleInstructionsChange, handleNextStep, handlePreviousStep } from "../../helpers";
 
-import FileUploader from "../FileUploader";
-import toast from "react-hot-toast";
-import { addRecipeToFireStore, fetchCategories, fetchRecipe, updateRecipe } from "../../services/recipes";
-import { useRouter } from "next/navigation";
-
+import FileUploader from "../file-uploader";
+import { fetchCategories, fetchRecipe } from "../../services/recipes";
 import { Recipe } from "../../types";
 import { uploadRecipeImageToStorage } from "../../utils";
+
 import { getEmailFromCookies } from "@/app/(auth)/helpers";
+import useAddRecipe from "../../hooks/useAddRecipe";
+import useUpdateRecipe from "../../hooks/useUpdateRecipe";
 
 type Props = {
   type: string;
@@ -28,10 +28,10 @@ export default function RecipeForm({ type, id }: Props) {
   const [instructions, setInstructions] = useState([""]);
   const [currentStep, setCurrentStep] = useState(0);
   const [addCategoryBtnClicked, setAddCategoryBtnClicked] = useState(false);
-  const [loading, setLoading] = useState("");
   const [category, setCategory] = useState("");
+
   const [allCategories, setAllCategories] = useState<string[] | undefined>(
-    undefined
+    undefinedw
   );
   const [image, setImage] = useState<null | File | string>(null);
   const [formValues, setFormValues] = useState({
@@ -39,8 +39,10 @@ export default function RecipeForm({ type, id }: Props) {
     description: "",
     tags: "",
   });
+  
+  const { handleAddRecipe, loading } = useAddRecipe()
+  const { handleUpdateRecipe, loading: _loading } = useUpdateRecipe()
 
-  const router = useRouter();
 
   const handleFieldChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -50,7 +52,6 @@ export default function RecipeForm({ type, id }: Props) {
   };
 
   function returnImageUrl(file: File) {
-    console.log(file);
     setImage(file);
   }
 
@@ -83,58 +84,22 @@ export default function RecipeForm({ type, id }: Props) {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const email = await getEmailFromCookies();
     const uploadedUrl = await uploadRecipeImageToStorage(image as File);
+
     switch (type) {
       case "Add":
-        try {
-          setLoading("loading");
-          const info = await addRecipeToFireStore({
-            formValues,
-            category,
-            instructions,
-            imageUrl: uploadedUrl,
-            isPublic: false,
-            email: email!,
-          });
-          console.log(info);
-          setLoading("done");
-          toast.success("recipe created!");
-          router.push("/recipes")
-        } catch (error) {
-          console.error(error);
-          toast.error("error, try again");
-          setLoading("done");
-          return;
-        }
+        handleAddRecipe({ url: uploadedUrl, formValues, category, instructions, email })
       case "Update":
-        try {
-          setLoading("loading");
-          const url = getImageSource(image, uploadedUrl);
-          await updateRecipe({
-            id: id!,
-            formValues,
-            category,
-            instructions,
-            imageUrl: url,
-          });
-          setLoading("done");
-          router.push("/recipes");
-        } catch (error) {
-          toast.error("failed, try again");
-          console.error(error);
-          setLoading("done");
-          return;
-        }
-      // update
+       handleUpdateRecipe({ image, uploadedUrl, id, formValues, category, instructions })
       default:
         console.error("unknown operation");
     }
+    
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-lg">
+    <div className="max-w-3xl mx-auto bg-white rounded-lg lg:mb-10">
       <form onSubmit={handleSubmit}>
         <div className="mb-6">
           <Label
@@ -253,10 +218,11 @@ export default function RecipeForm({ type, id }: Props) {
         <div className="mt-6 text-center">
           <Button
             type="submit"
-            className="bg-orange-color hover:bg-orange-color focus:bg-orange-color
-          active:bg-orange-color w-full text-white py-3 px-6 rounded-lg transition duration-300"
+            className="bg-green hover:bg-green focus:bg-green
+            active:bg-green w-full text-white py-3 px-6 rounded-lg
+            transition duration-300"
           >
-            {loading === "loading" ? (
+            {loading || _loading  === "loading" ? (
               <Loader2Icon className="w-4 h-4 animate-spin" />
             ) : type == "Add" ? (
               "Add"

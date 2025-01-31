@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google"
+import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
-  subsets: ["greek"]
-})
-
+  subsets: ["greek"],
+});
 
 export const metadata: Metadata = {
   title: "Cookio-Accounts",
@@ -17,11 +16,5 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <main
-      className={`${roboto.className}`}
-    >
-      {children}
-    </main>
-  );
+  return <main className={`${roboto.className}`}>{children}</main>;
 }

@@ -4,27 +4,13 @@ import { doc, setDoc, getDoc, deleteDoc, updateDoc, query, where } from "firebas
 import { v4 as uuidv4 } from "uuid"
 
 import { collection, getDocs } from "firebase/firestore";
-import { Recipe } from "../types";
+import { AddRecipeToFireStoreProps, Recipe } from "../types";
 import { revalidatePath } from "next/cache";
-
-
-type Props = {
-    formValues: {
-        title: string;
-        description: string;
-        tags: string;
-    },
-    category: string;
-    instructions: string[],
-    imageUrl: string,
-    isPublic: boolean;
-    email: string;
-}
 
 export const addRecipeToFireStore = async ({
     formValues, category, instructions,
     imageUrl, isPublic, email
-}: Props) => {
+}: AddRecipeToFireStoreProps) => {
 
     try {
         await setDoc(doc(database, COLLECTION_NAMES.recipes, `${uuidv4()}`), {
