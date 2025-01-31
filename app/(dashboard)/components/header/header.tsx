@@ -8,7 +8,7 @@ import Logo from "@/components/composites/logo/logo";
 import { LogOut } from "lucide-react";
 import { useEffect } from "react";
 import { getUserSession } from "@/app/(auth)/helpers";
-import { useAuthStore } from "@/store/auth/auth-store";
+import { useAuthStore } from "@/store/auth/auth";
 
 import {
   Dialog,

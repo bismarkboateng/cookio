@@ -4,7 +4,8 @@ import { doc, setDoc, getDoc, deleteDoc, updateDoc, query, where } from "firebas
 import { v4 as uuidv4 } from "uuid"
 
 import { collection, getDocs } from "firebase/firestore";
-import { AddRecipeToFireStoreProps, Recipe } from "../types";
+import { AddRecipeToFireStoreProps } from "../types";
+import { Recipe } from "@/types";
 import { revalidatePath } from "next/cache";
 
 export const addRecipeToFireStore = async ({

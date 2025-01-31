@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchRecipe } from "../../services/recipes";
-import { Recipe } from "../../types";
+import { Recipe } from "@/types";
 
 import { Loader2Icon } from "lucide-react";
 import Image from "next/image";

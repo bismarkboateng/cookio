@@ -4,7 +4,7 @@ import { z } from "zod";
 import { signInFormSchema } from "../utils";
 
 import { setEmailInCookies } from "../helpers";
-import { useAuthStore } from "@/store/auth/auth-store";
+import { useAuthStore } from "@/store/auth/auth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 

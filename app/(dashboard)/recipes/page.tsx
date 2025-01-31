@@ -2,25 +2,28 @@
 
 import Link from "next/link";
 import RecipeCard from "@/components/composites/recipe-card/recipe-card";
-import { fetchAllRecipesFromFireStore } from "../services/recipes";
-import { RecipeFromDb } from "../types";
+import { useEffect } from "react";
+import { useRecipeSlice } from "@/store/recipe/recipes";
 
-import { useEffect, useState } from "react";
-import { getEmailFromCookies } from "@/app/(auth)/helpers";
+import RecipeSkeleton from "../components/recipe-skeleton/recipe-skeleton";
 
 export default function Page() {
-  const [recipes, setRecipes] = useState([] as RecipeFromDb);
+  const { recipes, fetchRecipes, loading } = useRecipeSlice((state) => state);
 
   useEffect(() => {
-    const fetchInfo = async () => {
-      const email = await getEmailFromCookies();
-      const data: RecipeFromDb = await fetchAllRecipesFromFireStore(email!);
-
-      setRecipes(data);
-    };
-
-    fetchInfo();
+    fetchRecipes();
   }, []);
+
+  if (loading === "loading") return <RecipeSkeleton />;
+  if (loading === "done" && recipes.length == 0)
+    return (
+      <div className="flex items-center justify-center">
+        <Link href="/recipes/add">
+          No recipes,{" "}
+          <span className="underline text-green">Click to create one</span>
+        </Link>
+      </div>
+    );
 
   return (
     <section className="mt-5 md:mt-10">
@@ -35,14 +38,6 @@ export default function Page() {
             id={item.id}
           />
         ))}
-        {recipes.length == 0 && (
-          <div className="flex items-center justify-center">
-            <Link href="/recipes/add">
-              No recipes,{" "}
-              <span className="underline text-green">Click to create one</span>
-            </Link>
-          </div>
-        )}
       </section>
     </section>
   );

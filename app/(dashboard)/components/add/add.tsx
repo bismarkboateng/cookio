@@ -12,7 +12,7 @@ import { handleInstructionsChange, handleNextStep, handlePreviousStep } from "..
 
 import FileUploader from "../file-uploader";
 import { fetchCategories, fetchRecipe } from "../../services/recipes";
-import { Recipe } from "../../types";
+import { Recipe } from "@/types";
 import { uploadRecipeImageToStorage } from "../../utils";
 
 import { getEmailFromCookies } from "@/app/(auth)/helpers";

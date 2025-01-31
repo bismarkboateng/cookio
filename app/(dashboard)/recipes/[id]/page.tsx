@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { fetchRecipe, toggleRecipeVisibility } from "../../services/recipes";
-import { Recipe } from "../../types";
+import { Recipe } from "@/types";
 import toast from "react-hot-toast";
 
 import { EditIcon, Loader2Icon, TrashIcon } from "lucide-react";
